@@ -1,5 +1,6 @@
 package uz.pdp.news.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +23,7 @@ public class Role extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
     @JsonIgnore
     @ToString.Exclude
