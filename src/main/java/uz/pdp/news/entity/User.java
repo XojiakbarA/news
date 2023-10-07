@@ -27,7 +27,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Role role;
 
     @Column(nullable = false)

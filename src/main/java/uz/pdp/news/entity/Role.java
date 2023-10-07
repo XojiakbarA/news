@@ -18,7 +18,7 @@ import uz.pdp.news.enums.Authority;
 @Data
 @Entity(name = "roles")
 public class Role extends BaseEntity {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)

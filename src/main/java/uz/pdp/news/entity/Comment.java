@@ -13,6 +13,6 @@ public class Comment extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Post post;
 }
