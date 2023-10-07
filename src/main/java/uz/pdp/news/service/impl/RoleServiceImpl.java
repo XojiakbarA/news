@@ -32,11 +32,6 @@ public class RoleServiceImpl implements RoleService {
     private Role save(Role role) {
         return roleRepository.save(role);
     }
-    private Role findById(Long id) {
-        return roleRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException(resourceName, "id", id)
-        );
-    }
     private void checkToExistsByName(String name) {
         if (roleRepository.existsByName(name)) {
             throw new ResourceExistsException(resourceName, "name", name);
@@ -55,6 +50,13 @@ public class RoleServiceImpl implements RoleService {
     public Role findByName(String name) {
         return roleRepository.findByName(name).orElseThrow(
             () -> new ResourceNotFoundException(resourceName, "name", name)
+        );
+    }
+
+    @Override
+    public Role findById(Long id) {
+        return roleRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException(resourceName, "id", id)
         );
     }
 

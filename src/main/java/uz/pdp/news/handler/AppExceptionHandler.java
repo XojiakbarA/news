@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import jakarta.validation.ConstraintViolationException;
 import uz.pdp.news.dto.response.ErrorResponse;
 import uz.pdp.news.exception.ResourceExistsException;
 import uz.pdp.news.exception.ResourceNotFoundException;
@@ -51,5 +53,15 @@ public class AppExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return new ErrorResponse(HttpStatus.BAD_REQUEST.name(), errors);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getConstraintViolations().forEach(
+                c -> errors.put(c.getPropertyPath().toString(), c.getMessage())
+        );
+        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.name(), errors);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

@@ -10,7 +10,7 @@ import uz.pdp.news.entity.Role;
 @Component
 public class RoleMapper {
     @Autowired
-    private UserMapper userMapper;
+    private UserAuditorMapper userAuditorMapper;
 
     public RoleView mapToView(Role role) {
         if (role == null) return null;
@@ -20,8 +20,8 @@ public class RoleMapper {
                     .authorities(role.getAuthorities())
                     .createdAt(role.getCreatedAt())
                     .updatedAt(role.getUpdatedAt())
-                    .createdBy(userMapper.mapToAuditorView(role.getCreatedBy()))
-                    .updatedBy(userMapper.mapToAuditorView(role.getUpdatedBy()))
+                    .createdBy(userAuditorMapper.mapToAuditorView(role.getCreatedBy()))
+                    .updatedBy(userAuditorMapper.mapToAuditorView(role.getUpdatedBy()))
                     .build();
     }
 
