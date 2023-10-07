@@ -5,14 +5,14 @@ import java.util.Set;
 
 import lombok.Builder;
 import lombok.Data;
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 
 @Data
 @Builder
 public class RoleView {
     private Long id;
     private String name;
-    private Set<Authority> authorities;
+    private Set<AuthorityType> authorities;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private UserAuditorView createdBy;

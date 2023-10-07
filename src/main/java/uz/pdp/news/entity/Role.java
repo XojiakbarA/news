@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -23,7 +23,7 @@ public class Role extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<AuthorityType> authorities = new HashSet<>();
 
     @JsonIgnore
     @ToString.Exclude

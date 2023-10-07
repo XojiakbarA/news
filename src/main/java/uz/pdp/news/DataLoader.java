@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 import uz.pdp.news.service.RoleService;
 import uz.pdp.news.service.UserService;
 
-import static uz.pdp.news.enums.Authority.*;
+import static uz.pdp.news.enums.AuthorityType.*;
 import static uz.pdp.news.enums.RoleType.*;
 
 @Component
@@ -20,8 +20,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        roleService.create(ADMIN.name(), Authority.values());
-        roleService.create(MODERATOR.name(), GET_POSTS, GET_POST, CREATE_POST, UPDATE_POST, DELETE_POST, GET_COMMENTS, GET_COMMENT, CREATE_COMMENT);
+        roleService.create(ADMIN.name(), AuthorityType.values());
+        roleService.create(MODERATOR.name(), GET_POSTS, GET_POST, CREATE_POST, UPDATE_POST, GET_COMMENTS, GET_COMMENT, CREATE_COMMENT);
         roleService.create(USER.name(), GET_POSTS, GET_POST, GET_COMMENTS, GET_COMMENT, CREATE_COMMENT);
 
         userService.create("firstNameAdmin1", "lastNameAdmin1", "admin1", "123", ADMIN.name());

@@ -7,10 +7,10 @@ import uz.pdp.news.dto.request.AuthoritiesRequest;
 import uz.pdp.news.dto.request.RoleRequest;
 import uz.pdp.news.dto.view.RoleView;
 import uz.pdp.news.entity.Role;
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 
 public interface RoleService {
-    void create(String name, Authority ...authorities);
+    void create(String name, AuthorityType ...authorities);
 
     Role findByName(String name);
 

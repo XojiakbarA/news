@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 import uz.pdp.news.validator.IsValidEnum;
 
 @Data
@@ -16,5 +16,5 @@ public class AuthoritiesRequest {
     private Set<
         @NotNull(message = "authority must not be null")
         @NotBlank(message = "authority must not be empty")
-        @IsValidEnum(enumClazz = Authority.class) String> authorities;
+        @IsValidEnum(enumClazz = AuthorityType.class) String> authorities;
 }

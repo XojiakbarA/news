@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_USERS)")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Response getAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
@@ -38,6 +40,7 @@ public class UserController {
         return new Response(HttpStatus.OK.name(), users);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_USER)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response getById(@PathVariable Long id) {
@@ -46,6 +49,7 @@ public class UserController {
         return new Response(HttpStatus.OK.name(), user);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).CREATE_USER)")
     @Validated(OnCreate.class)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,6 +59,7 @@ public class UserController {
         return new Response(HttpStatus.CREATED.name(), user);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).UPDATE_USER)")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response update(@Valid @RequestBody UserRequest request, @PathVariable Long id) {
@@ -63,6 +68,7 @@ public class UserController {
         return new Response(HttpStatus.OK.name(), user);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).LOCK_USER)")
     @PutMapping("/{id}/lock")
     @ResponseStatus(HttpStatus.OK)
     public Response lock(@PathVariable Long id) {
@@ -71,6 +77,7 @@ public class UserController {
         return new Response(HttpStatus.OK.name());
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).UNLOCK_USER)")
     @PutMapping("/{id}/unlock")
     @ResponseStatus(HttpStatus.OK)
     public Response unlock(@PathVariable Long id) {
@@ -79,6 +86,7 @@ public class UserController {
         return new Response(HttpStatus.OK.name());
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).DELETE_USER)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Response deleteById(@PathVariable Long id) {

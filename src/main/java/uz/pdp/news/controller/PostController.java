@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class PostController {
     @Autowired
     private CommentService commentService;
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_POSTS)")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Response getAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
@@ -42,6 +44,7 @@ public class PostController {
         return new Response(HttpStatus.OK.name(), posts);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_POST)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response getById(@PathVariable Long id) {
@@ -50,6 +53,7 @@ public class PostController {
         return new Response(HttpStatus.OK.name(), post);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_COMMENTS)")
     @GetMapping("/{id}/comments")
     @ResponseStatus(HttpStatus.OK)
     public Response getAllCommentsByPostId(@PathVariable Long id, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
@@ -58,6 +62,7 @@ public class PostController {
         return new Response(HttpStatus.OK.name(), comments);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).CREATE_POST)")
     @Validated(OnCreate.class)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,6 +72,7 @@ public class PostController {
         return new Response(HttpStatus.CREATED.name(), post);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).UPDATE_POST)")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response update(@Valid @RequestBody PostRequest request, @PathVariable Long id) {
@@ -75,6 +81,7 @@ public class PostController {
         return new Response(HttpStatus.OK.name(), post);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).DELETE_POST)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Response deleteById(@PathVariable Long id) {

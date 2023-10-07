@@ -12,7 +12,7 @@ import uz.pdp.news.dto.request.AuthoritiesRequest;
 import uz.pdp.news.dto.request.RoleRequest;
 import uz.pdp.news.dto.view.RoleView;
 import uz.pdp.news.entity.Role;
-import uz.pdp.news.enums.Authority;
+import uz.pdp.news.enums.AuthorityType;
 import uz.pdp.news.exception.ResourceExistsException;
 import uz.pdp.news.exception.ResourceNotFoundException;
 import uz.pdp.news.mapper.RoleMapper;
@@ -42,8 +42,8 @@ public class RoleServiceImpl implements RoleService {
             throw new ResourceExistsException(resourceName, "name", name);
         }
     }
-    private Set<Authority> mapStringsToAuthorities(Set<String> strings) {
-        return strings.stream().map(a -> Authority.valueOf(a.toUpperCase())).collect(Collectors.toSet());
+    private Set<AuthorityType> mapStringsToAuthorities(Set<String> strings) {
+        return strings.stream().map(a -> AuthorityType.valueOf(a.toUpperCase())).collect(Collectors.toSet());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void create(String name, Authority... authorities) {
+    public void create(String name, AuthorityType... authorities) {
         checkToExistsByName(name);
         
         Role role = new Role();
@@ -112,7 +112,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleView addAuthorities(AuthoritiesRequest request, Long id) {
         Role role = findById(id);
 
-        Set<Authority> authorities = mapStringsToAuthorities(request.getAuthorities());
+        Set<AuthorityType> authorities = mapStringsToAuthorities(request.getAuthorities());
 
         role.getAuthorities().addAll(authorities);
 
@@ -122,7 +122,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleView removeAuthorities(AuthoritiesRequest request, Long id) {
         Role role = findById(id);
 
-        Set<Authority> authorities = mapStringsToAuthorities(request.getAuthorities());
+        Set<AuthorityType> authorities = mapStringsToAuthorities(request.getAuthorities());
 
         role.getAuthorities().removeAll(authorities);
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_ROLES)")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Response getAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
@@ -36,6 +38,7 @@ public class RoleController {
         return new Response(HttpStatus.OK.name(), roles);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).GET_ROLE)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response getById(@PathVariable Long id) {
@@ -44,6 +47,7 @@ public class RoleController {
         return new Response(HttpStatus.OK.name(), role);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).CREATE_ROLE)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Response create(@Valid @RequestBody RoleRequest request) {
@@ -52,6 +56,7 @@ public class RoleController {
         return new Response(HttpStatus.CREATED.name(), role);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).UPDATE_ROLE)")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response update(@Valid @RequestBody RoleRequest request, @PathVariable Long id) {
@@ -60,6 +65,7 @@ public class RoleController {
         return new Response(HttpStatus.OK.name(), role);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).ADD_AUTHORITIES)")
     @PutMapping("/{id}/authorities")
     @ResponseStatus(HttpStatus.OK)
     public Response addAuthorities(@Valid @RequestBody AuthoritiesRequest request, @PathVariable Long id) {
@@ -68,6 +74,7 @@ public class RoleController {
         return new Response(HttpStatus.OK.name(), role);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).REMOVE_AUTHORITIES)")
     @DeleteMapping("/{id}/authorities")
     @ResponseStatus(HttpStatus.OK)
     public Response removeAuthorities(@Valid @RequestBody AuthoritiesRequest request, @PathVariable Long id) {
@@ -76,6 +83,7 @@ public class RoleController {
         return new Response(HttpStatus.OK.name(), role);
     }
 
+    @PreAuthorize("hasAuthority(T(uz.pdp.news.enums.AuthorityType).DELETE_ROLE)")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Response deleteById(@PathVariable Long id) {
