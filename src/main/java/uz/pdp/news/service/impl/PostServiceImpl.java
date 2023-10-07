@@ -26,11 +26,6 @@ public class PostServiceImpl implements PostService {
     private Post save(Post post) {
         return postRepository.save(post);
     }
-    private Post findById(Long id) {
-        return postRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException(resourceName, "id", id)
-        );
-    }
 
     @Override
     public Page<PostView> getAll(Pageable pageable) {
@@ -58,6 +53,13 @@ public class PostServiceImpl implements PostService {
         postMapper.mapToEntity(post, request);
 
         return postMapper.mapToView(save(post));
+    }
+
+    @Override
+    public Post findById(Long id) {
+        return postRepository.findById(id).orElseThrow(
+            () -> new ResourceNotFoundException(resourceName, "id", id)
+        );
     }
 
     @Override
